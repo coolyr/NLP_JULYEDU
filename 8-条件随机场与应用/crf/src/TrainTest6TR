@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# Author: Archer Reilly
+# Date: 26/Mar/2016
+# File: TrainTest
+# Desc: glue script that prepare train and test data, train and test
+#       and give out accuracy
+#
+# Produced By CSRGXTU
+./PrepareTrainingData6TR.py $1
+
+./PrepareTestingData6TR.py $1
+
+../bin/bin/crf_learn template-file-tr ../data/TeamRank/$1.train6tr.csv model-file-tr
+
+../bin/bin/crf_test -m model-file-tr ../data/TeamRank/$1.test6tr.csv > result-tr.log
+
+./CRFAccurate.py result-tr.log
